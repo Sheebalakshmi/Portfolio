@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sheeba — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1724; /* deep navy */
+      --card:#0b1220;
+      --accent:#7c3aed; /* purple */
+      --accent-2:#06b6d4; /* teal */
+      --glass: rgba(255,255,255,0.03);
+      --muted: #cbd5e1;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Poppins,system-ui,Segoe UI,Roboto,Arial;color:var(--muted);background: radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.12), transparent), radial-gradient(900px 400px at 90% 85%, rgba(6,182,212,0.08), transparent), var(--bg);}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin:40px auto;padding:24px}
+
+    /* header */
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;font-weight:800;color:white;font-size:20px;box-shadow:0 8px 30px rgba(124,58,237,0.18);}
+    nav{display:flex;gap:12px}
+    nav a{padding:8px 12px;border-radius:10px;background:transparent;border:1px solid transparent}
+    nav a:hover{border-color:rgba(255,255,255,0.06);backdrop-filter:blur(4px)}
+
+    /* hero */
+    .hero{grid-template-columns:1fr 360px;gap:28px;margin-top:30px}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:28px;border-radius:20px;box-shadow:0 10px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+    .intro h1{margin:0;font-size:36px;line-height:1;color:white}
+    .intro h2{margin:6px 0 14px;color:var(--accent);letter-spacing:1px}
+    .intro p{margin:0 0 18px;color:var(--muted);max-width:54ch}
+
+    .cta{display:flex;gap:12px;align-items:center}
+    .btn{padding:10px 14px;border-radius:12px;font-weight:600;cursor:pointer;border:0}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#ff6ec7);color:white;box-shadow:0 8px 30px rgba(124,58,237,0.18)}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    /* side card */
+    .side{display:flex;flex-direction:column;gap:12px}
+    .contact-card{padding:16px;border-radius:12px;background:linear-gradient(90deg, rgba(124,58,237,0.04), rgba(6,182,212,0.03));border:1px solid rgba(255,255,255,0.03)}
+    .contact-item{display:flex;gap:12px;align-items:center}
+    .contact-item strong{display:block;color:white}
+    .links a{display:inline-block;margin-right:8px;padding:8px;border-radius:10px;background:rgba(255,255,255,0.02)}
+
+    /* sections */
+    section{margin-top:26px}
+    h3.section-title{margin:0 0 12px;color:white}
+
+    /* skills - horizontal scroll cards (column-wise feel) */
+    .skills-row{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px}
+    .skill{min-width:220px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:16px;border-radius:14px;border:1px solid rgba(255,255,255,0.03);backdrop-filter:blur(6px)}
+    .skill h4{margin:0 0 6px;color:var(--accent)}
+    .skill p{margin:0;color:var(--muted);font-size:14px}
+
+    /* projects */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+    .project{position:relative;padding:16px;border-radius:12px;background:linear-gradient(135deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);overflow:hidden}
+    .project h4{margin:0 0 6px;color:white}
+    .project p{margin:0;color:var(--muted);font-size:14px}
+    .project .project-link{position:absolute;right:12px;bottom:12px;padding:8px 10px;border-radius:10px;background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.03)}
+
+    /* certificates */
+    .cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+    .cert{border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);background:var(--card)}
+    .cert img{width:100%;height:110px;object-fit:cover;display:block}
+    .cert a{display:block;padding:10px;text-align:center;color:var(--muted)}
+
+    /* CERTIFICATES */
+.cert-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+gap:12px
+}
+.cert img{
+width:100%;
+height:110px;
+object-fit:cover;
+border-radius:10px;
+cursor:pointer
+}
+
+/* MODAL */
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.85);
+align-items:center;
+justify-content:center;
+z-index:999
+}
+.modal img{
+max-width:90%;
+max-height:90%;
+border-radius:10px
+}
+.modal span{
+position:absolute;
+top:20px;
+right:30px;
+font-size:32px;
+color:white;
+cursor:pointer
+}
+
+/* STRENGTH */
+.contact-card{
+padding:16px;
+border-radius:12px;
+background:linear-gradient(90deg, rgba(124,58,237,0.04), rgba(6,182,212,0.03));
+border:1px solid rgba(255,255,255,0.03)
+}
+    /* footer / contact form */
+    .contact-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .field{display:flex;flex-direction:column}
+    input,textarea{padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--muted)}
+    textarea{min-height:130px;resize:vertical}
+
+    /* small screen */
+    @media(max-width:880px){
+      .hero{grid-template-columns:1fr;}
+      .contact-form{grid-template-columns:1fr}
+      .side{flex-direction:row;justify-content:space-between}
+      .logo{width:52px;height:52px}
+    }
+
+    /* glow animation for headings */
+    .glow{position:relative}
+    .glow:after{content:'';position:absolute;left:-30%;right:-30%;top:-30%;bottom:-30%;background:radial-gradient(circle at 10% 10%, rgba(124,58,237,0.08), transparent 20%), radial-gradient(circle at 90% 80%, rgba(6,182,212,0.06), transparent 20%);filter:blur(30px);opacity:0;transition:opacity .4s;border-radius:20px}
+    .glow:hover:after{opacity:1}
+
+    /* small niceties */
+    .muted{color:var(--muted);font-size:14px}
+    .chip{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.02);font-size:13px}
+
+    /* subtle floating */
+    .float{animation:float 6s ease-in-out infinite}
+    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">S</div>
+        <div>
+          <div style="font-weight:800;color:white">R.SHEEBA LAKSHMI</div>
+          <div class="muted">Aspiring Software Engineer • UI/UX Designer • Web Developer • Data Analyst</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#certs">Certificates</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="hero">
+        <div class="hero-card intro">
+          <section id="about">
+          <h1 class="glow">Hi, I'm Sheeba</h1>
+            <h2><span style="color:white">Software Engineer & Student</span></h2>
+          <h2>Passionate about UI/UX, Web Development & Data Analyst</h2>
+          <p>
+             Third year Computer Science Engineering Student with interests in software engineering, UI/UX, web Development, and data analysis. I love solving problems, designing interrfaces, coding solutions and finding insights in data
+          </p>
+
+          <div class="cta">
+            <a class="btn btn-primary" href="Course Certificates/Resume.pdf" download>Download Resume</a>
+            <button class="btn btn-ghost" onclick="scrollToSection('contact')">Contact Me</button>
+            <a class="chip" href="https://www.linkedin.com/in/sheebachandran" target="_blank">LinkedIn</a>
+          </div>
+            <h3 class="section-title" style="margin-top:16px">Education</h3>
+            <p class="muted">B.E. Computer Science Engineering — Holy Cross Engineering College, Vagaikulam. (2022 – Present) — 3rd Year</p>
+          </section>
+        </div>
+
+          
+      <section id="skills">
+        <h3 class="section-title">Technical Skills</h3>
+        <div class="skills-row">
+          <div class="skill float">
+            <h4>Programming</h4>
+            <p>Python — completed course at Vikas Learning Institute. Built mini programs and exercises.</p>
+          </div>
+          <div class="skill">
+            <h4>Web</h4>
+            <p>HTML, CSS, JavaScript — basic knowledge; practice projects and small websites.</p>
+          </div>
+          <div class="skill">
+            <h4>Data</h4>
+            <p>Data Analytics (basic), Data Science (basic), Power BI (course completed).</p>
+          </div>
+          <div class="skill">
+            <h4>Design</h4>
+            <p>UI/UX — basic understanding and practice screens for mobile and web.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects">
+        <h3 class="section-title">Projects</h3>
+        <div class="grid">
+          <article class="project">
+            <h4>Orphanage Donation</h4>
+            <p>Create a responsive and user-friendly website for an orphanage donation platform, allowing users to learn about the orphanage and make secure donations. The website will include features such as a home page, about page, children's page, donation page, and contact page.</p>
+            <a class="project-link" href="https://sheebalakshmi.github.io/Orphanage-donation---NM-Project/">View</a>
+             </article>
+
+          <article class="project">
+            <h4>Infinite Scroll Gallery</h4>
+            <p>Create an Infinite Scroll Gallery website using HTML, CSS, and JavaScript, showcasing images in a seamless and interactive scrolling experience. The website will load new images as the user scrolls down, providing an endless browsing experience.</p>
+            <a class="project-link" href="https://www.linkedin.com/posts/sheebachandran_infinitescroll-gallery-webdev-activity-7404566173297700864-_qmf?utm_source=share&utm_medium=member_android&rcm=ACoAAE5zpagBolMGAKqE96BBPQZT2opCYlJlhAQ">View</a>
+          </article>
+
+          <article class="project">
+            <h4>Calculator</h4>
+            <p>Create a basic Calculator using Python, allowing users to perform arithmetic operations like addition, subtraction, multiplication, and division. The calculator will have a simple and intuitive interface, making it easy to use.</p>
+            <a class="project-link" href="https://www.linkedin.com/posts/sheebachandran_python-internship-codsoft-activity-7360154660508258304-I9wH?utm_source=share&utm_medium=member_android&rcm=ACoAAE5zpagBolMGAKqE96BBPQZT2opCYlJlhAQ">View</a>
+          </article>
+
+          <article class="project">
+            <h4>Rock Paper Scissor</h4>
+            <p>To create a Rock Paper Scissors game using Python, allowing users to play against the computer. The game will generate a random choice for the computer and determine the winner based on the user's input.</p>
+            <a class="project-link" href="https://www.linkedin.com/posts/sheebachandran_python-internship-codsoft-activity-7359944835467763712-3kuK?utm_source=share&utm_medium=member_android&rcm=ACoAAE5zpagBolMGAKqE96BBPQZT2opCYlJlhAQ">View</a>
+          </article>
+          <article class="project">
+            <h4>To Do List</h4>
+            <p>To create a simple To-Do List app using Python, allowing users to add, remove, and view tasks. The app will store tasks in a list and provide basic functionality for managing tasks.</p>
+            <a class="project-link" href="https://www.linkedin.com/posts/sheebachandran_python-internship-codsoft-activity-7359939112109293568-Cl4_?utm_source=share&utm_medium=member_android&rcm=ACoAAE5zpagBolMGAKqE96BBPQZT2opCYlJlhAQ">View</a>
+          </article>
+          <article class="project">
+            <h4>Inventory Management System</h4>
+            <p>To create an Inventory Management System using Python, allowing users to manage stock levels, track items, and generate reports. The system will provide a simple and efficient way to manage inventory.</p>
+            <a class="project-link" href="https://www.linkedin.com/posts/sheebachandran_python-internship-brainwavematrix-activity-7359253931547353088-xgoh?utm_source=share&utm_medium=member_android&rcm=ACoAAE5zpagBolMGAKqE96BBPQZT2opCYlJlhAQ">View</a>
+          </article>
+          <article class="project">
+            <h4>Mini ATM Interface</h4>
+            <p>To create a Mini ATM interface using Python, allowing users to perform basic banking operations like checking balance, withdrawing cash, and depositing money. The interface will provide a simple and secure way to manage accounts.</p>
+            <a class="project-link" href="https://www.linkedin.com/posts/sheebachandran_python-internship-brainwavematrix-activity-7359251745094451203-9Jev?utm_source=share&utm_medium=member_android&rcm=ACoAAE5zpagBolMGAKqE96BBPQZT2opCYlJlhAQ">View</a>
+          </article>
+           <article class="project">
+            <h4>Age Calculator</h4>
+            <p>To create an Age Calculator website using HTML, CSS, and JavaScript, allowing users to calculate their age in years, months, and days. The website will take the user's birthdate as input and display their age.</p>
+            <a class="project-link" href="https://www.linkedin.com/posts/sheebachandran_webdevelopment-activity-7354102056946716672-aAzj?utm_source=share&utm_medium=member_android&rcm=ACoAAE5zpagBolMGAKqE96BBPQZT2opCYlJlhAQ">View</a>
+          </article>
+           <article class="project">
+            <h4>Music Player</h4>
+            <p>To create a Music Player website using HTML, CSS, and JavaScript, allowing users to play, pause, and navigate through a collection of songs. The website will provide a simple and intuitive interface for music playback.</p>
+            <a class="project-link" href="https://www.linkedin.com/posts/sheebachandran_frontenddevelopment-musicplayer-webdevelopment-activity-7354099185123561473-fat2?utm_source=share&utm_medium=member_android&rcm=ACoAAE5zpagBolMGAKqE96BBPQZT2opCYlJlhAQ">View</a>
+          </article>
+           <article class="project">
+            <h4>Calculator</h4>
+            <p>Create a basic Calculator using HTML, CSS, and JavaScript, allowing users to perform arithmetic operations like addition, subtraction, multiplication, and division. The calculator will have a simple and intuitive interface, making it easy to use.</p>
+            <a class="project-link" href="https://www.linkedin.com/posts/sheebachandran_webdevelopment-calculator-codealpha-activity-7353622715779440641-2-oR?utm_source=share&utm_medium=member_android&rcm=ACoAAE5zpagBolMGAKqE96BBPQZT2opCYlJlhAQ">View</a>
+          </article>
+           <article class="project">
+            <h4>Gallery</h4>
+            <p>To create a Gallery website using HTML, CSS, and JavaScript, showcasing images in a visually appealing and interactive manner. The website will allow users to view and navigate through a collection of images.</p>
+            <a class="project-link" href="https://www.linkedin.com/posts/sheebachandran_frontenddevelopment-imagegallery-webdevelopment-activity-7353295719375515649-8_lm?utm_source=share&utm_medium=member_android&rcm=ACoAAE5zpagBolMGAKqE96BBPQZT2opCYlJlhAQ">View</a>
+          </article>
+       
+          
+        </div>
+      </section>
+
+      <section id="certs">
+        <h3 class="section-title">Certificates</h3>
+         <div class="cert-grid" style="margin-top:12px">
+    
+           <div class="cert">
+            <img src="Course Certificates/AI internship.jpg" alt="Certificate 3" onclick="openCert(this)">Artificial Intelligence internship - Placemantra</a>
+          </div>
+          
+           <div class="cert">
+            <img src="Course Certificates/AI letter of recommendation.jpg" alt="Certificate 3" onclick="openCert(this)">Artificial Intelligence internship - Placemantra (Letter of Recomendations)</a>
+          </div>
+          <div class="cert">
+            <img src="Course Certificates/IT (2).jpg" alt="Certificate 3" onclick="openCert(this)">Certificate of Industrial Training – Placemanta</a>
+          </div>
+           <div class="cert">
+            <img src="Course Certificates/Cyber Security Workshop.jpg" alt="Certificate 3" onclick="openCert(this)">Cyber Security Workshop - Novitech</a>
+          </div>
+           <div class="cert">
+            <img src="Course Certificates/Cyber Security.jpg" alt="Certificate 3" onclick="openCert(this)">Cyber Security Course – Novitech</a>
+          </div>
+           <div class="cert">
+            <img src="Course Certificates/Dashboard Workshop.jpg" alt="Certificate 3" onclick="openCert(this)">Retail sales and growth analysis Dashboard Workshop – Novitech</a>
+          </div>
+           <div class="cert">
+            <img src="Course Certificates/Data Analyst.jpg" alt="Certificate 3" onclick="openCert(this)">Data Analyst Course – Novitech</a>
+          </div>
+           <div class="cert">
+            <img src="Course Certificates/Data Analytics Internship.jpg" alt="Certificate 3" onclick="openCert(this)">Data Analytics Internship – Novitech</a>
+          </div>
+          
+           <div class="cert">
+            <img src="Course Certificates/Excel Workshop.jpg" alt="Certificate 3" onclick="openCert(this)">Excel Workshop – Novitech</a>
+          </div>
+           
+           <div class="cert">
+            <img src="Course Certificates/Full Stack Development Internship.jpg" alt="Certificate 3" onclick="openCert(this)">Full Stack Development Internship – Novitech</a>
+          </div>
+           <div class="cert">
+            <img src="Course Certificates/Full Stack Development.jpg" alt="Certificate 3" onclick="openCert(this)">Full Stack Development Course – Novitech</a>
+          </div>
+           
+          
+           
+           <div class="cert">
+            <img src="Course Certificates/Power BI.jpg" alt="Certificate 3" onclick="openCert(this)">Power BI Course – Novitech</a>
+          </div>
+           <div class="cert">
+            <img src="Course Certificates/Powerr BI workshop.jpg" alt="Certificate 3" onclick="openCert(this)">Powerr BI workshop – Office Master</a>
+          </div>
+          
+           
+           <div class="cert">
+            <img src="Course Certificates/UI UX Design.jpg" alt="Certificate 3" onclick="openCert(this)">UI/UX Design Course – Novitech</a>
+          </div>
+           <div class="cert">
+            <img src="Course Certificates/Vikas learnings Python.jpg" alt="Certificate 3" onclick="openCert(this)">Python Programming Course – Vikas Learning Institute</a>
+          </div>
+           <div class="cert">
+            <img src="Course Certificates/Web Development internship.jpg" alt="Certificate 3" onclick="openCert(this)">Web Development Internship – Placemantra</a>
+          </div>
+           <div class="cert">
+            <img src="Course Certificates/IT.jpg" alt="Certificate 3" onclick="openCert(this)">Certificate of Industrial Training – Placemanta</a>
+          </div>
+           <div class="cert">
+            <img src="Course Certificates/Letter of recommendations web development.jpg" alt="Certificate 3"onclick="openCert(this)">Web Development Internship – Placcemantra (letter of recommendations)</a>
+          </div>
+           <div class="cert">
+            <img src="Course Certificates/Web Development Workshop.jpg" alt="Certificate 3" onclick="openCert(this)">Web Development Workshop – Sprout</a>
+           </div>
+            <div class="cert">
+            <img src="Course Certificates/Productivity With Macros Workshop.jpg" alt="Certificate 3" onclick="openCert(this)">Productivity With Macros Workshop – Novitech</a>
+          </div>
+          
+           <div class="cert">
+            <img src="Course Certificates/React workshop.jpg" alt="Certificate 3" onclick="openCert(this)">React workshop – Skyskill</a>
+          </div>
+           <div class="cert">
+            <img src="Course Certificates/Selenium Workshop.jpg" alt="Certificate 3" onclick="openCert(this)">Selenium Workshop – First bit solutions</a>
+          </div>
+           <div class="cert">
+            <img src="Course Certificates/Node.JS Bootcamp.jpg" alt="Certificate 3" onclick="openCert(this)">Node.js Bootcamp - Devtown</a>
+          </div>
+           <div class="cert">
+            <img src="Course Certificates/Node.Js Project Completion.jpg" alt="Certificate 3" onclick="openCert(this)">Node.Js Project Completion - Devtown</a>
+          </div>
+          <div class="cert">
+            <img src="Course Certificates/Flutterflow Bootcamp.jpg" alt="Certificate 3" onclick="openCert(this)">Flutterflow Bootcamp – Lets upgrade</a>
+          </div>
+           <div class="cert">
+            <img src="Course Certificates/Devops Workshop.jpg" alt="Certificate 3" onclick="openCert(this)" >Devops Workshop – First Bit Solutions</a>
+          </div>
+          <div class="cert" >
+            <img src="Course Certificates/SQL Injection Bootcamp.jpg" alt="Certificate 3" onclick="openCert(this)">SQL Injection Bootcamp – Devvtown</a>
+          </div>
+        </div>
+        <!-- CERTIFICATE MODAL -->
+<div id="certModal" class="modal" onclick="closeCert()">
+  <span>&times;</span>
+  <img id="certImg">
+</div>
+      </section>
+      
+      
+      <!-- ================= STRENGTHS ================= -->
+<section>
+<div class="contact-card">
+<div style="font-weight:700;color:white">Strengths</div>
+<div style="margin-top:8px">
+• Quick learner • Hardworking • Team player • Interested in technology & design
+</div>
+</div>
+</section>
+
+</div>
+
+
+      <section id="contact">
+        <h3 class="section-title">Contact</h3>
+        <p class="muted">Want to reach me? Kindly Send a message or use the contact details on the right.</p>
+
+        <div style="display:grid;grid-template-columns:1fr 340px;gap:18px;margin-top:12px">
+          <div class="hero-card">
+            <form id="contactForm" onsubmit="sendEmail(event)">
+              <div class="contact-form">
+                <div class="field">
+                  <label class="muted">Your name</label>
+                  <input id="name" required placeholder="Your name">
+                </div>
+                <div class="field">
+                  <label class="muted">Your email</label>
+                  <input id="email" type="email" required placeholder="you@example.com">
+                </div>
+                <div class="field" style="grid-column:1/-1">
+                  <label class="muted">Message</label>
+                  <textarea id="message" required placeholder="Write your message..."></textarea>
+                </div>
+                <div style="grid-column:1/-1;display:flex;gap:8px;justify-content:flex-end">
+                  <button class="btn btn-primary" type="submit">Send</button>
+                  <button type="button" class="btn btn-ghost" onclick="copyEmail()">Copy Email</button>
+                </div>
+              </div>
+            </form>
+
+              </div>
+
+          <aside class="side">
+            <div class="contact-card">
+              <div class="contact-item" style="margin-top:8px"><strong>Phone</strong><div style="margin-left:auto">6381801869</div></div>
+              <div class="contact-item"><strong>Email</strong><div style="margin-left:auto">sheebachandran125@gmail.com</div></div>
+              
+              <div style="margin-top:12px">
+                <a class="btn btn-primary" href="mailto:sheebachandran125@gmail.com">Email Me</a>
+              </div>
+            </div>
+
+            <div class="contact-card" style="margin-top:12px">
+              <div style="margin-top:8px" class="muted">
+                <div>LinkedIn: <a href="https://www.linkedin.com/in/sheebachandran" target="_blank">sheebachandran</a></div>
+
+                <div style="margin-top:6px">Resume: <a href="Course Certificates/Resume.pdf">Download</a></div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <footer style="margin-top:28px;text-align:center;color:var(--muted)">Made with ❤ by SheebaChandran</footer>
+
+    </main>
+  </div>
+
+<!-- MODAL -->
+<div class="modal" id="certModal" onclick="closeCert()">
+<span>&times;</span>
+<img id="certImg">
+</div>
+
+  <script>
+    function scrollToSection(id){
+      document.getElementById(id).scrollIntoView({behavior:'smooth'});
+    }
+
+    function copyEmail(){
+      navigator.clipboard.writeText('sheebachandran125@gmail.com').then(()=>alert('Email copied to clipboard'));
+    }
+
+    function sendEmail(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+
+      // Simple mailto fallback — opens user's email client
+      const subject = encodeURIComponent('Portfolio contact from ' + name);
+      const body = encodeURIComponent('Name: '+name+'\nEmail: '+email+'\n\n'+message);
+      window.location.href = `mailto:sheebachandran125@gmail.com?subject=${subject}&body=${body}`;
+
+      /*
+       * OPTIONAL: To wire with EmailJS or Formspree instead of mailto
+       * 1) EmailJS: include their script and use emailjs.send('service_id','template_id', {name,email,message})
+       * 2) Formspree: change form action to Formspree endpoint and method="POST"
+       */
+
+
+    }
+    function openCert(img){
+document.getElementById("certImg").src = img.src;
+document.getElementById("certModal").style.display = "flex";
+}
+function closeCert(){
+document.getElementById("certModal").style.display = "none";
+}
+  </script>
+</body>
+</html>
